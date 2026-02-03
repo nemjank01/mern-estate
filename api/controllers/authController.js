@@ -14,6 +14,6 @@ export async function signup(req, res, next) {
     });
     res.status(201).json(newUser);
   } catch (error) {
-    res.status(500).json(error.message);
+    next(error);
   }
 }
