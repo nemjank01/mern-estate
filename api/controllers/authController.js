@@ -12,7 +12,7 @@ export async function signup(req, res, next) {
       email,
       password: hashedPassword,
     });
-    res.status(201).json(newUser);
+    res.status(201).json({ message: "User successfully created" });
   } catch (error) {
     next(error);
   }
