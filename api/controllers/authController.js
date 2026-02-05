@@ -84,3 +84,14 @@ export async function google(req, res, next) {
     next(error);
   }
 }
+
+export async function signOut(req, res, next) {
+  try {
+    res
+      .status(200)
+      .clearCookie("access_token")
+      .json({ message: "User has been loged out successfully!" });
+  } catch (error) {
+    next(error);
+  }
+}
