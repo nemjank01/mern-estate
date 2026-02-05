@@ -36,3 +36,19 @@ export async function updateUser(req, res, next) {
     next(error);
   }
 }
+
+export async function deleteUser(req, res, next) {
+  if (req.user.id !== req.params.id)
+    return next(errorHandler(401, "You can only delete your own account!"));
+
+  try {
+    await User.findByIdAndDelete(req.params.id);
+
+    res
+      .status(200)
+      .clearCookie("access_token")
+      .json({ message: "User deleted successfully!" });
+  } catch (error) {
+    next(error);
+  }
+}
