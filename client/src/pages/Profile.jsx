@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 import {
   updateUserStart,
@@ -137,6 +138,12 @@ export default function Profile() {
         >
           {isLoading ? "Loading..." : "Update"}
         </button>
+        <Link
+          to="/create-listing"
+          className="bg-green-700 text-center p-3 uppercase text-white rounded-lg hover:opacity-95 transition-all"
+        >
+          Create Listing
+        </Link>
       </form>
       <div className="flex justify-between items-center mt-4">
         <span
