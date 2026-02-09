@@ -1,6 +1,28 @@
-import React from "react";
+/* eslint-disable no-unused-vars */
+import React, { useState } from "react";
+
+const images = [
+  "https://www.paranych.com/uploads/benefits-penthouse-living-main-image.png",
+  "https://hgtvhome.sndimg.com/content/dam/images/hgtv/fullset/2018/2/8/1/CI_Halstead_History-of-Penthouses-6.jpg.rend.hgtvcom.1280.720.85.suffix/1518139442662.webp",
+  "https://www.imtilak.net/crop/798/469/posts/fe08852eeadb1d1458d97981e6aea56cQsS616.webp",
+  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbNHK91Mp5f2O8MsRrkhNeDeNfoIVLe9P-8A&s",
+  "https://limassolblumarine.com/wp-content/uploads/2022/11/24-102-Blue-Marine-penthouse-c02b-1-scaled.jpg",
+  "https://d18slle4wlf9ku.cloudfront.net/atlantiscasino.com-1116647142/cms/cache/v2/66d782512c861.jpg/1920x1080/fit/80/6228ff8ce2482cc6dd78d0f852731c29.jpg",
+];
 
 export default function CreateListing() {
+  const [files, setFiles] = useState([]);
+  const [formData, setFormData] = useState({});
+
+  async function handleImageUpload(e) {
+    e.preventDefault();
+
+    //logic for uploading images to firebase
+    // now firebase storage is not anymore free
+
+    setFormData({ ...formData, imageUrls: files });
+  }
+
   return (
     <main className="p-3 max-w-4xl mx-auto">
       <h1 className="text-3xl font-semibold text-center my-7">
@@ -124,8 +146,13 @@ export default function CreateListing() {
               accept="image/*"
               multiple
               className="p-3 border border-gray-300 rounded w-full"
+              onChange={(e) => setFiles(images)}
             />
-            <button className="p-3 text-green-700 border border-green-700 rounded uppercase hover:text-white hover:bg-green-700 isabled:opacity-80 transition-all">
+            <button
+              type="button"
+              onClick={handleImageUpload}
+              className="p-3 text-green-700 border border-green-700 rounded uppercase hover:text-white hover:bg-green-700 isabled:opacity-80 transition-all"
+            >
               Upload
             </button>
           </div>
