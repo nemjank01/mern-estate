@@ -65,3 +65,17 @@ export async function getUserListings(req, res, next) {
     next(error);
   }
 }
+
+export async function getUser(req, res, next) {
+  try {
+    const user = await User.findById(req.params.id);
+
+    if (!user) return next(errorHandler(404, "Use not found!"));
+
+    const { password: pass, ...rest } = user;
+
+    res.status(200).json(rest._doc);
+  } catch (error) {
+    next(error);
+  }
+}

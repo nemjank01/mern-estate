@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore from "swiper";
 import { Navigation } from "swiper/modules";
@@ -12,6 +13,7 @@ import {
   FaSquareParking,
   FaChair,
 } from "react-icons/fa6";
+import Contact from "../components/Contact";
 
 export default function Listing() {
   SwiperCore.use([Navigation]);
@@ -19,6 +21,8 @@ export default function Listing() {
   const [listing, setListing] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [contact, setContact] = useState(false);
+  const { currentUser } = useSelector((state) => state.user);
 
   useEffect(() => {
     async function fetchListing(listingId) {
@@ -31,14 +35,14 @@ export default function Listing() {
         if (data.success === false) {
           setError(true);
           setIsLoading(false);
-          console.log(data.message);
+          // console.log(data.message);
           return;
         }
 
         setIsLoading(false);
         setError(false);
         setListing(data);
-        console.log(data);
+        // console.log(data);
       } catch (error) {
         setError(true);
         setIsLoading(false);
@@ -122,6 +126,17 @@ export default function Listing() {
             {listing?.furnished ? "Furnished" : "Unfurnished"}
           </li>
         </ul>
+
+        {currentUser && listing?.userRef !== currentUser._id && !contact && (
+          <button
+            onClick={() => setContact(true)}
+            className="bg-slate-700 text-white rounded-lg uppercase hover:opacity-95 p-3"
+          >
+            Contact landlord
+          </button>
+        )}
+
+        {contact && <Contact listing={listing} />}
       </div>
     </main>
   );
